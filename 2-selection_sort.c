@@ -2,44 +2,46 @@
 #include <stdio.h>
 
 /**
- * swap - swaps the values of two integers
- * @a: Pointer to the first integer
- * @b: Pointer to the second integer
- */
-void swap(int *a, int *b)
-{
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-/**
- * selection_sort - sorts an array of integers in ascending order
- * @array: The array to be sorted
- * @size: The size of the array
+ * selection_sort - Sorts an array of integers in ascending order using
+ *                  the Selection Sort algorithm.
+ * @array: The array to be sorted.
+ * @size: The size of the array.
  */
 void selection_sort(int *array, size_t size)
 {
-    if (array == NULL || size < 2)
-        return;
+	size_t current_pass = 0;
+	size_t min_index;
+	size_t i;
+	int temporary;
 
-    size_t pass, min, i;
+	/* Check if the array is valid for sorting */
+	if (array == NULL || size < 2)
+		return;
 
-    for (pass = 0; pass < size - 1; pass++)
-    {
-        min = pass;
+	/* Iterate through the array */
+	while (current_pass < size - 1)
+	{
+		min_index = current_pass;
+		i = current_pass + 1;
 
-        for (i = pass + 1; i < size; i++)
-        {
-            if (array[i] < array[min])
-                min = i;
-        }
+		/* Find the index of the minimum element in the unsorted part */
+		while (i < size)
+		{
+			if (array[i] < array[min_index])
+				min_index = i;
+			i++;
+		}
 
-        if (min != pass)
-        {
-            swap(&array[pass], &array[min]);
-            print_array(array, size);
-        }
-    }
+		/* Swap the minimum element with the first element of the unsorted part */
+		if (min_index != current_pass)
+		{
+			temporary = array[current_pass];
+			array[current_pass] = array[min_index];
+			array[min_index] = temporary;
+			print_array(array, size);
+		}
+
+		current_pass++;
+	}
 }
 
